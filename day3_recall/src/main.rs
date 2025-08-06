@@ -7,7 +7,7 @@ use rand::prelude::*;
 // show use of OS threads you wait for
 // show use of async/await tasks you wait for
 fn calculator(mut n: i64, rng: &mut ThreadRng ) -> i64 {
-    for _ in 1..1_000_000_000 {
+    for _ in 1..1_000_000 {
         n = n.wrapping_add(rng.random_range(0..100)).wrapping_mul(rng.random_range(1..100)) / rng.random_range(1..100);
     }
     n
