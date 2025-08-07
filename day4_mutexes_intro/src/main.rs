@@ -25,7 +25,7 @@ fn main() {
     let primes: Arc<Mutex<Vec<i32>>> = Arc::new(Mutex::new(vec![]));
     let mut handles: Vec<JoinHandle<()>> = vec![];
     let mut min = 1;
-    for num in 1..threads+1 {
+    for num in 1..=threads {
         let max = min + (total / threads);
         let primes_clone = Arc::clone(&primes);
         let iterations_clone = Arc::clone(&iterations);
