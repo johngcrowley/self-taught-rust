@@ -7,12 +7,15 @@ from memory (no looking at prior days' notes or code) the lessons learned in the
 
 ---
 
-- [ ] Complete the bootcamp advanced [section](https://portal.letsgetrusty.com/bootcamp/subcategory/13)
+- [ ] Complete the bootcamp advanced async section [section](https://portal.letsgetrusty.com/bootcamp/subcategory/13)
+- [ ] Do custom [bootcamp](./rust_async_bootcamp.md)
 - [ ] Complete BTree project
 - [ ] Complete Neon Pull Request
 - [ ] Complete `rustlings` code kata
 
 ---
+
+### Capstone
 
 Do this in order, then, complete a project showcasing:
 - webserver
