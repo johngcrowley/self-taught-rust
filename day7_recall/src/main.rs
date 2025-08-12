@@ -1,21 +1,21 @@
 use std::sync::{Arc,Mutex};
 use tokio::task::JoinSet;
-use std::sync::mpsc::{Sender};
 use rand::prelude::*;
 use tokio_stream::StreamExt;
+use tokio::sync::mpsc::channel;
 
 // TODO: 
 // 1. how could i borrow armies and not copy it into `combat()`
 // 2. why isn't my "general crushed army ..." output interleaved?
 
-fn combat(mut army: i32, tx: Sender<(i32, i32)>) {
+fn combat(mut army: i32, tx: tokio::sync::mpsc::Sender<(i32, i32)>) {
     let initial_forces = army;
     let mut rng = rand::rng();
     for _wave in 1..1_000_00 {
         let casualties = rng.random_range(1..15);
         army -= casualties;
     }
-    tx.send((initial_forces, army));
+    tx.blocking_send((initial_forces, army));
 }
 
 async fn execute_order(general: &'static str, battles_mx: Arc<Mutex<i32>>, armies: Vec<i32>) {
@@ -23,7 +23,7 @@ async fn execute_order(general: &'static str, battles_mx: Arc<Mutex<i32>>, armie
     println!("{general} executing order");
     
     // each general's communication line to lieutenants
-    let (tx, rx) =  std::sync::mpsc::channel();
+    let (tx, mut rx) = channel(1000);
     
     // Simulate a stream of armies we're going to battle with 
     let mut armies_stream = tokio_stream::iter(armies);
@@ -38,8 +38,8 @@ async fn execute_order(general: &'static str, battles_mx: Arc<Mutex<i32>>, armie
 
     drop(tx);
     
-    for (i, battle) in rx.iter().enumerate() {
-        println!("{general} crushed army {i} from {} to {}", battle.0, battle.1);
+    while let Some(battle) = rx.recv().await {
+        println!("{general} crushed army from {} to {}", battle.0, battle.1);
     }
 }
 
