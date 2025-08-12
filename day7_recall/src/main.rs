@@ -15,6 +15,8 @@ fn combat(mut army: i32, tx: tokio::sync::mpsc::Sender<(i32, i32)>) {
         let casualties = rng.random_range(1..15);
         army -= casualties;
     }
+    // because this isn't an `async` funtion. there is no state machine `async fn`
+    // of `combat` to poll this completion if it were `tx.send()`.
     tx.blocking_send((initial_forces, army));
 }
 
