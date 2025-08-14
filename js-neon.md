@@ -271,6 +271,14 @@ fn main() {
 }
 ```
 
+### An Aside
+
+**Arc<RwLock<T>> vs RwLock<Arc<T>>**: Think of `Arc` as a backstage pass that multiple people can hold copies of, and `RwLock` as a bouncer who controls access. `Arc<RwLock<LayerMap>>` means everyone shares the same bouncer who guards one LayerMap. The bug here: we get past the bouncer (acquire read lock), grab a reference to something inside (the Arc<Layer>), then leave (drop the lock). But the bouncer doesn't know we're still holding that reference - compaction could swap everything out while we're using it.
+
+**AtomicU64 with Ordering**: Atomics are like bank transactions - they complete fully or not at all, no half-states. `Ordering::Relaxed` is saying "I don't care about synchronization with other memory operations, just make this atomic." It's the fastest but offers no guarantees about what other threads see when. `Ordering::SeqCst` is paranoid mode - everything happens in a globally consistent order, like having a universal timestamp on every operation.
+
+**The async sleep in get_value**: This simulates real I/O and forces a yield point. In async Rust, `.await` is where your task can be paused and another task can run. This is exactly where race conditions love to hide - between the time you check something and the time you use it.
+
 **The Challenge**: The bug is that we're holding onto the read lock while doing async I/O. This seems fine, but what if compaction runs and completely replaces the layer map? The Arc keeps the old layer alive, but we might be reading from an outdated layer that doesn't reflect recent writes.
 
 **Your Goal**: Fix this without sacrificing performance. Think about when you actually need the lock.
@@ -353,6 +361,16 @@ async fn main() {
     // test_your_decoder().await;
 }
 ```
+
+### An Aside
+
+**Bytes vs BytesMut**: `BytesMut` is a growable buffer - think of it as a `Vec<u8>` optimized for network buffers. When you call `freeze()`, it becomes `Bytes` - an immutable, reference-counted slice. The magic: multiple `Bytes` can share the same underlying memory. Calling `slice()` on Bytes doesn't copy - it just adjusts pointers. It's like having multiple windows looking at different parts of the same wall.
+
+**AsyncRead + Unpin**: The `AsyncRead` trait is for things you can read from asynchronously. The `Unpin` bound means "this type can be moved freely in memory." Most types are `Unpin`, but futures that are currently being polled might not be. It's Rust's way of saying "I promise not to create self-referential nightmares."
+
+**read_exact vs read**: `read()` is like asking for a glass of water - you might get less than a full glass. `read_exact()` keeps asking until the glass is full or the tap runs dry. In TCP, packets arrive in chunks, so `read()` might return 10 bytes when you asked for 100. Always handle partial reads in network code.
+
+**The tokio::io::Cursor**: It's a fake "file" that reads from memory - perfect for testing. It implements `AsyncRead` just like a real TCP socket would, but it's deterministic and doesn't require actual networking.
 
 **Hint**: Use `BytesMut` as an accumulator, but convert to `Bytes` (via `freeze()`) for zero-copy sharing. The tricky part is handling partial reads - you might get 10 bytes when you asked for 24.
 
@@ -479,6 +497,16 @@ async fn main() {
     }
 }
 ```
+
+### An Aside
+
+**impl Stream<Item = T> + '_**: This returns an anonymous type that implements Stream. The `'_` lifetime means "figure it out yourself, compiler" - it's borrowing from `self` for as long as the stream lives. Streams are async iterators - instead of `next()` returning `Option<T>`, it returns `Future<Output = Option<T>>`. Each call to `next().await` might suspend while waiting for the next item.
+
+**CancellationToken**: This is cooperative cancellation - like a fire alarm that politely asks everyone to leave rather than forcibly ejecting them. When `cancel()` is called, `is_cancelled()` returns true, but running code must check it. It's not like killing a thread; it's setting a flag that says "please stop when convenient."
+
+**select_all**: Takes multiple streams and merges them into one stream that yields items from whichever stream has data ready first. Warning: it doesn't preserve ordering across streams! If you need sorted output from sorted inputs, `select_all` is wrong - you need a proper k-way merge with a `BinaryHeap`.
+
+**StreamExt trait**: Adds combinators to streams, like `map`, `filter`, `buffer_unordered`. Think of it as the async version of `Iterator` methods. The `buffer_unordered(n)` method is particularly powerful - it processes up to `n` futures concurrently, yielding results as they complete.
 
 **Key Insight**: The `select_all` approach above is actually wrong for maintaining sort order! You need a proper k-way merge. Consider using a `BinaryHeap` to track which stream has the next smallest entry.
 
@@ -628,6 +656,18 @@ async fn main() {
     //     .unwrap();
 }
 ```
+
+### An Aside
+
+**Path extractors**: Axum's `Path` extractor destructures URL segments directly into your types. `Path((a, b))` with double parens extracts a tuple. The types must implement `Deserialize`. It's compile-time routing - if the types don't match the route definition, it won't compile.
+
+**State extractor**: `State<T>` clones `T` on each request (that's why we wrap everything in `Arc`). It's how you share app-wide resources. The actual cloning is just incrementing an atomic reference count - cheap. Without `Arc`, you'd be deep-cloning your entire application state on every request.
+
+**DashMap**: A concurrent HashMap that shards itself internally. Unlike `RwLock<HashMap>`, different threads can modify different keys simultaneously. Each shard has its own lock. It's like having multiple separate HashMaps with a router in front - much better concurrency for hot paths.
+
+**tracing::Instrument**: Attaches a span to a future. Every log message inside that future automatically includes the span's fields. The `?` in `tenant_id = ?tenant_id` means "use Debug formatting." Without `?`, it would need Display. Spans form a tree - child spans inherit parent context.
+
+**IntoResponse trait**: Axum's way of converting your types into HTTP responses. Implement it for your error types to get automatic error handling. The framework calls `into_response()` on whatever you return. Even `Json<T>` implements `IntoResponse`, setting the content-type header automatically.
 
 **Pro tip**: The tracing span pattern shown above ensures that every log message within the request includes the tenant_id and timeline_id automatically. This is invaluable when debugging production issues.
 
@@ -893,6 +933,23 @@ async fn main() {
 }
 ```
 
+### An Aside
+
+**async_trait**: Rust doesn't natively support async functions in traits (yet). This macro rewrites your async trait methods to return `Pin<Box<dyn Future>>`. It adds a heap allocation per call, but makes async traits ergonomic. The alternative is manually writing associated types for each future - painful.
+
+**Semaphore**: Not your OS semaphore - this is an async-aware counting semaphore. `acquire()` returns a future that completes when a permit is available. The permit is RAII - dropping it releases back to the semaphore. It's like a bouncer counting people: "Room for 10, you're number 11, wait outside."
+
+**Ordering on Atomics**: 
+- `Relaxed`: "Just make it atomic, I don't care about synchronization"
+- `Acquire/Release`: Forms happens-before relationships (like mutex lock/unlock)
+- `SeqCst`: Global total order, most expensive, usually overkill
+
+For counters, `Relaxed` is fine. For flags that guard data, you need stronger ordering.
+
+**timeout() wrapper**: Creates a new future that races your future against a timer. If the timer wins, you get `Err(Elapsed)`. If your future wins, you get `Ok(your_result)`. The original future is cancelled (dropped) if it times out. Always put timeouts on network operations.
+
+**Exponential backoff math**: Start at 100ms, double each time, cap at 10s. This prevents thundering herd - if a service is down and 1000 clients all retry immediately, they'll overwhelm it when it comes back. Spreading retries over time gives the service a chance to recover.
+
 **Key insight**: The circuit breaker pattern prevents cascading failures. When a backend is struggling, continuously hammering it with retries makes things worse. Better to fail fast and give it time to recover.
 
 ---
@@ -1110,6 +1167,18 @@ fn main() {
     }
 }
 ```
+
+### An Aside
+
+**Range<T>**: Rust's half-open interval type - `start..end` includes start but excludes end. This makes adjacent ranges naturally non-overlapping: `0..5` and `5..10` don't overlap. Perfect for representing key ranges. Implements `Iterator` if T is numeric.
+
+**Option::take()**: Moves the value out of an Option, leaving None behind. It's like removing something from a box and leaving the box empty. `current_op.take().unwrap()` says "I know there's something in here, give it to me and leave None." Useful for state machines where you transition by consuming the old state.
+
+**saturating_sub**: Subtraction that clamps to 0 instead of panicking on underflow. `5u32.saturating_sub(10)` gives 0, not a panic. Essential for defensive programming with untrusted input. There's also `wrapping_sub` (wraps around) and `checked_sub` (returns Option).
+
+**#[cfg(test)]**: Conditional compilation - this code only exists when running tests. The test module and its imports disappear in release builds. Keeps your binary lean. You can also use `#[cfg(feature = "...")]` for feature flags.
+
+**then_with() in sorting**: Chains comparison operations. `a.cmp(&b).then_with(|| c.cmp(&d))` means "sort by a/b first, break ties with c/d." The closure is only called if the first comparison is Equal. More efficient than tuple comparison when the secondary key is expensive to compute.
 
 **Real-world note**: This optimization can reduce I/O operations by 10x in workloads with spatial locality. The key is tuning the parameters based on your storage backend's characteristics.
 
@@ -1529,6 +1598,20 @@ async fn main() {
     println!("Bytes downloaded: {}", progress.bytes_downloaded.load(Ordering::Relaxed));
 }
 ```
+
+### An Aside
+
+**tokio::select!**: The Swiss Army knife of async concurrency. It races multiple futures and proceeds with whichever completes first, cancelling the others. Here we're racing cancellation against timer ticks. The `_ =` syntax means "I don't care about the value." Think of it as a switch statement for futures - first match wins, others are dropped.
+
+**buffer_unordered(n)**: Transforms a stream of futures into a stream of results, running up to `n` futures concurrently. Unlike `join_all`, it yields results as they complete, not in order. This is key for throughput - slow downloads don't block fast ones. The semaphore inside each future provides additional backpressure control.
+
+**DashMap iteration**: When you call `.iter()` on a DashMap, each iteration briefly locks that shard. The iterator holds a guard that's dropped between iterations. This means the map can be modified between iterations - it's not a snapshot. If you need consistency, collect to a Vec first (but that defeats the purpose of sharding).
+
+**Arc<dyn Trait>**: Dynamic dispatch through a vtable. Every call to a trait method goes through a pointer indirection. We use `Arc` because `dyn Trait` is unsized - you can't put it directly in a struct. The `Send + Sync` bounds ensure the trait object can be shared across threads safely.
+
+**Generation numbers**: A versioning scheme to handle concurrent modifications. Each write increments the generation. If two processes try to write generation 5, one wins and becomes generation 6. The loser must retry with generation 7. This prevents the "lost update" problem without distributed locking.
+
+**RAII pattern with in_flight**: We insert into `in_flight` before starting the operation and remove after completion (success or failure). If we crash, the entry remains, signaling incomplete work. This is crash-safety 101 - mark your intent before acting, clean up after. The next reconciliation run can detect and retry incomplete operations.
 
 **This is your final test**: Make this production-ready. Consider:
 - What happens if we crash mid-download?
