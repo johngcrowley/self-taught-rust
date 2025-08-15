@@ -39,7 +39,8 @@ fn cut_up_ints(val: String) -> Result<i32, DeepParsingError> {
 
 fn slice_n_dice(phones: Vec<String>) -> Result<Vec<i32>, SlicenDicingError> {
     
-    let stuff = std::fs::read_to_string("goopy.txt")?;
+    // TODO: `touch` this file to see the error in call stack
+    //let stuff = std::fs::read_to_string("goopy.txt")?;
     
     phones
         .into_iter()
