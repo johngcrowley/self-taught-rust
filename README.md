@@ -2,16 +2,20 @@
 
 ---
 
-For the bootcamp or learning module sections, you will do two days in a row, then when you feel like you've forgotten things, createa a `_recall` binary that sums together
-from memory (no looking at prior days' notes or code) the lessons learned in the two days prior. The struggle to recall is indeed good.
+When you feel like you've forgotten things, createa a `_recall` binary that sums together
+from memory (no looking at prior days' notes or code) the lessons learned in the two days prior. 
+
+The struggle to recall is indeed good. Keep going. No dopamine hits. This stays private. 
 
 ---
 
-- [ ] Complete the bootcamp advanced async section [section](https://portal.letsgetrusty.com/bootcamp/subcategory/13)
+- [ ] Complete Neon Pull Request
 - [ ] Do custom [bootcamp](./rust_async_bootcamp.md)
 - [ ] Complete BTree project
-- [ ] Complete Neon Pull Request
-- [ ] Complete `rustlings` code kata
+- [ ] Study John's Async Architecture CPU Caching Paper
+- [ ] Neon Engineer Simulation Bootcamp
+- [ ] Complete `rustlings` code kata to stay fresh during long-running tasks (PRs, Projects)
+- [ ] Capstone!
 
 ---
 
