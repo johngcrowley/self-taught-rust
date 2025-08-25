@@ -1,5 +1,24 @@
 use std::collections::HashMap;
 
+/*
+ * `map` consumes `self` that it is called upon, so it's __`map`'s__ return type of `Some()` or `Ok()`
+ * 
+ * it's a `match` statement under the hood, whose arm `=> Some(fn(t))`
+ *
+ * `and_then`'s `match` statement arm is `=> fn(t)`
+ *
+ * The type signiature for `and_then` shows the closure and function return type are the same
+ * so the `fn(t)` therein is fallible, returning the `Some()` or `Ok()` (or `None`, etc) we expect
+ *
+ * The type signature for `map` shows the closure returns just the extracted value, where `map`'s
+ * function return type wraps it with the `Some()` or `Ok()`.
+ *
+ * You always get confused because it seems like `and_then`'s closure + function both returning the
+ * wrapper type seems like it would "double up" or nest the returned value, like `map` does when
+ * you call `.map` on a fallible operation like `parse`.
+ *
+ */
+
 #[derive(Debug, PartialEq)]
 pub enum Command {
     Set(String, i32),
