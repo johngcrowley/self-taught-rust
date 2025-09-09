@@ -1,5 +1,5 @@
-# Production Rust Bridge Course
-- 4-day intensive preparation for advanced systems programming
+# 04. Production Exam: Engineering Skills
+**4-Day Production Systems Assessment**
 
 ## Mission Statement
 

@@ -1,10 +1,10 @@
-# Rust Fundamentals Diagnostic Exam
+# 01. Diagnostic Exam: Rust Fundamentals  
 ## Individual Concept Assessment
 **Time Limit: 2 hours | Total Points: 100**
 
 **Purpose:** This diagnostic exam tests individual Rust concepts in isolation to assess foundational knowledge. 
 
-**Note:** For comprehensive systems integration assessment, take the **Mastery Exam** in `school/0_course.md`.
+**Note:** For comprehensive systems integration assessment, take the **Mastery Exam** in `03_mastery_exam.md`.
 
 ---
 
@@ -169,7 +169,7 @@ Explain when you would choose borrowed deserialization vs owned deserialization.
 ## Next Steps
 
 ### If you scored 80%+:
-- You're ready for the comprehensive **Mastery Exam** (`school/0_course.md`)
+- You're ready for the comprehensive **Mastery Exam** (`03_mastery_exam.md`)
 - Consider reviewing any weak areas before advanced coursework
 
 ### If you scored 60-79%:
@@ -184,8 +184,8 @@ Explain when you would choose borrowed deserialization vs owned deserialization.
 
 ### Advanced Path:
 After mastering fundamentals, progress to:
-1. **Mastery Exam** (`school/0_course.md`) - Comprehensive integration assessment
-2. **Bridge Course** (`school/1_introduction.md`) - Production skills development  
+1. **Mastery Exam** (`03_mastery_exam.md`) - Comprehensive integration assessment
+2. **Bridge Course** (`04_production_exam.md`) - Production skills development  
 3. **Capstone Projects** - Real-world systems engineering
 
 ---

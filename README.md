@@ -8,10 +8,10 @@ This course is built around **Active Recall** methodology and the breakthrough i
 
 ## Learning Progression
 
-### Phase 1: Foundational Skills (Days 1-14)
+### Phase 1: Foundational Practice (Days 1-14)
 **Location**: `homework/day1_*` through `homework/day14_*`
 
-Build core competencies through hands-on exercises:
+Your personal workspace for practicing core competencies:
 
 **Async & Concurrency** (Days 1-5)
 - `day1_joinset_basics` - Basic task spawning and coordination
@@ -33,31 +33,42 @@ Build core competencies through hands-on exercises:
 - `day13_lifetimes_grok` - **THE BREAKTHROUGH**: Spatial lifetime understanding
 - `day14_serde_lifetimes` - Zero-copy deserialization patterns
 
-### Phase 2: Mastery Assessment
-**Location**: `school/0_course.md`
+### Phase 2: Active Recall Mastery Courses  
+**Location**: `school/`
 
-**The Rust Systems Programming Mastery Exam** - A comprehensive 6-hour assessment that validates your understanding of how all concepts integrate. This exam is built around the spatial model of lifetimes and tests your ability to reason about memory regions, async state machines, and production system design.
+Intensive courses that push you to mastery through active recall methodology:
 
-### Phase 3: Production Bridge Course  
-**Location**: `school/1_introduction.md`
+**`school/1_performance_debugging.md`** - **Performance Engineering & Debugging Mastery**
+Master GDB debugging, criterion benchmarking, CPU profiling, memory analysis, and production performance engineering. Learn to diagnose deadlocks, hunt memory leaks, and optimize for real-world workloads.
 
-**4-Day Intensive Bridge Course** - Transforms homework-level knowledge into production-ready skills:
-
-- **Day 1**: Advanced lifetime management & production race conditions
-- **Day 2**: Zero-copy processing & advanced serde patterns  
-- **Day 3**: Production error handling & observability
-- **Day 4**: Distributed system patterns & integration challenges
-
-**Prerequisites**: Pass the Mastery Exam
-**Outcome**: Ready for advanced projects and real production work
-
-### Phase 4: Advanced Applications
-
-**Neon Storage Backend Project** (`school/2_midterm_project.md`)
+**`school/2_midterm_project.md`** - **Neon Storage Backend Project**  
 6-day intensive building production storage system patterns including WAL processing, layer management, and distributed reconciliation.
 
-**Rust Performance Observatory** (`school/3_capstone.md`)  
+**`school/3_capstone.md`** - **Rust Performance Observatory**
 Deploy a complete streaming data pipeline to local k3s, orchestrate with custom operators, and build comprehensive tooling to measure and optimize Rust performance.
+
+### Phase 3: Challenging Examinations
+**Location**: `exams/`
+
+Rigorous exams designed to really test your mastery:
+
+**`exams/01_diagnostic_exam.md`** - **Diagnostic Exam** (2 hours)
+Individual concept assessment for foundational knowledge
+
+**`exams/02_integration_exam.md`** - **Integration Exam** (4 hours)  
+Tests integration of multiple concepts and intermediate systems design
+
+**`exams/03_mastery_exam.md`** - **The Comprehensive Mastery Exam** (6 hours)
+Ultimate test of systems integration built around spatial lifetime model
+
+**`exams/04_production_exam.md`** - **Production Bridge Course Exam** (4 hours)
+Advanced production patterns and crisis simulation challenges
+
+**`exams/05_systems_specialization_exam.md`** - **Advanced Systems Programming** (4 hours)
+Distributed systems, performance engineering, memory management, and error handling
+
+**`exams/06_concurrency_specialization_exam.md`** - **Async & Concurrency Mastery** (3 hours)
+Deep dive into async runtime internals, advanced synchronization, and concurrent system design
 
 ## Key Learning Breakthroughs
 
@@ -87,17 +98,15 @@ From homework patterns to production reality:
 
 ## Assessment Strategy
 
-### Exams Directory Structure
+**Exams are designed to really push you** - they're not just knowledge checks, but challenging scenarios that force you to apply concepts under pressure and integrate multiple areas of expertise.
 
-**`exams/exam1.md`** - Traditional academic-style exam (supplementary)
-**`exams/midterm.md`** - Advanced concepts exam (supplementary) 
-**`school/0_course.md`** - **PRIMARY ASSESSMENT** - Comprehensive mastery exam
+**Progression Strategy:**
+- Start with `exams/01_diagnostic_exam.md` for diagnostic assessment
+- Work through `school/` courses for active recall mastery  
+- Take `exams/03_mastery_exam.md` as the ultimate comprehensive test
+- Challenge yourself with specialized exams like `06_concurrency_specialization_exam.md`
 
-The primary assessment is the comprehensive exam in `school/0_course.md` because it:
-- Tests integrated understanding rather than isolated concepts
-- Uses the spatial lifetime model consistently
-- Connects homework exercises to production scenarios
-- Validates systems thinking and architecture skills
+The exams mirror real-world scenarios: debugging production issues, optimizing performance under constraints, designing distributed systems, and handling concurrent programming challenges.
 
 ## Getting Started
 

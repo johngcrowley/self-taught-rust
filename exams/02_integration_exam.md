@@ -1,12 +1,12 @@
-# Advanced Rust Concepts Assessment  
-## Midterm Examination - Integration Focus
+# 02. Integration Exam: Advanced Rust Concepts
+## Multi-Concept Integration Assessment
 **Time Limit: 4 hours | Total Points: 150**
 
 **Purpose:** This exam tests integration of multiple Rust concepts and intermediate systems design skills.
 
-**Note:** This exam bridges foundational knowledge and the comprehensive **Mastery Exam** (`school/0_course.md`).
+**Note:** This exam bridges foundational knowledge and the comprehensive **Mastery Exam** (`03_mastery_exam.md`).
 
-**Prerequisites:** Pass the Diagnostic Exam (`exam1.md`) with 80%+ score.
+**Prerequisites:** Pass the Diagnostic Exam (`01_diagnostic_exam.md`) with 80%+ score.
 
 ---
 

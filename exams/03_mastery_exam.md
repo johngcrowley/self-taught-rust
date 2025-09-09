@@ -1,5 +1,5 @@
-# The Rust Systems Programming Mastery Exam
-**Comprehensive Assessment of Homework Days 1-14**
+# 03. Mastery Exam: Systems Programming
+**Comprehensive Systems Integration Assessment**
 
 *"Lifetimes are not temporal concepts - they are spatial labels for stack frame regions where memory is allocated."*
 
