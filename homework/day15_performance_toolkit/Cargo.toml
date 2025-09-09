@@ -1,0 +1,43 @@
+[package]
+name = "performance-toolkit"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+tokio = { version = "1.0", features = ["full"] }
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"
+criterion = { version = "0.5", features = ["html_reports"] }
+pprof = { version = "0.13", features = ["flamegraph", "protobuf-codec"] }
+lazy_static = "1.4"
+
+[profile.release]
+debug = true  # Enable debug symbols in release mode for profiling
+
+[[bin]]
+name = "mystery-crash"
+path = "src/mystery_crash.rs"
+
+[[bin]]
+name = "async-deadlock" 
+path = "src/async_deadlock.rs"
+
+[[bin]]
+name = "cpu-intensive"
+path = "src/cpu_intensive.rs"
+
+[[bin]]
+name = "memory-issues"
+path = "src/memory_issues.rs"
+
+[[bin]]
+name = "slow-server"
+path = "src/slow_server.rs"
+
+[[bench]]
+name = "string_benchmark"
+harness = false
+
+[[bench]]
+name = "json_benchmark" 
+harness = false

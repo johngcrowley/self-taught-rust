@@ -1,8 +1,12 @@
-# CS 4803/6803: Advanced Rust Systems Programming
-## Final Examination - Fall 2025
-**Time Limit: 3 hours | Total Points: 200**
+# Advanced Rust Concepts Assessment  
+## Midterm Examination - Integration Focus
+**Time Limit: 4 hours | Total Points: 150**
 
-**Instructions:** This is a closed-book examination testing advanced Rust concepts. Write compilable code where requested. Explain your reasoning for conceptual questions. Partial credit will be awarded for correct analysis even if implementation is incomplete.
+**Purpose:** This exam tests integration of multiple Rust concepts and intermediate systems design skills.
+
+**Note:** This exam bridges foundational knowledge and the comprehensive **Mastery Exam** (`school/0_course.md`).
+
+**Prerequisites:** Pass the Diagnostic Exam (`exam1.md`) with 80%+ score.
 
 ---
 
