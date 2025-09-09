@@ -33,19 +33,16 @@ Your personal workspace for practicing core competencies:
 - `day13_lifetimes_grok` - **THE BREAKTHROUGH**: Spatial lifetime understanding
 - `day14_serde_lifetimes` - Zero-copy deserialization patterns
 
-### Phase 2: Active Recall Mastery Courses  
+### Phase 2: Production Systems Engineering  
 **Location**: `school/`
 
-Intensive courses that push you to mastery through active recall methodology:
+Real-world production systems engineering projects:
 
-**`school/1_performance_debugging.md`** - **Performance Engineering & Debugging Mastery**
-Master GDB debugging, criterion benchmarking, CPU profiling, memory analysis, and production performance engineering. Learn to diagnose deadlocks, hunt memory leaks, and optimize for real-world workloads.
+**`school/1_submarine_mlops_systems.md`** - **ML Operations Battle System (Project KRAKEN)**
+Build a production-grade ML operations pipeline with Axum APIs, PostgreSQL, real-time data processing, and Kubernetes auto-scaling. Features military-grade performance requirements: <200ms ML inference, 10,000+ ops/sec throughput, 99.99% uptime. Perfect portfolio project for ML Ops and platform engineering roles.
 
-**`school/2_midterm_project.md`** - **Neon Storage Backend Project**  
-6-day intensive building production storage system patterns including WAL processing, layer management, and distributed reconciliation.
-
-**`school/3_capstone.md`** - **Rust Performance Observatory**
-Deploy a complete streaming data pipeline to local k3s, orchestrate with custom operators, and build comprehensive tooling to measure and optimize Rust performance.
+**`school/2_midterm_project.md`** - **Neon Storage Backend Engineering**  
+6-day intensive building distributed PostgreSQL storage systems with WAL processing, layer management, and reconciliation patterns. Production storage engineering skills.
 
 ### Phase 3: Challenging Examinations
 **Location**: `exams/`
