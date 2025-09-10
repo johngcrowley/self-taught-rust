@@ -1,4 +1,4 @@
-# 03. Mastery Exam: Advanced Unsafe Rust & Memory Mastery
+# Advanced Unsafe Rust & Memory Mastery
 
 **Expert-Level Systems Programming Assessment**
 
@@ -8,7 +8,7 @@
 
 ## Prerequisites
 
-You must pass the **Advanced Systems Diagnostic (01_diagnostic_exam_v2.md)** before attempting this exam. This tests the **hardest concepts** in Rust - manual memory management while maintaining safety guarantees.
+You must pass the **Advanced Systems Diagnostic (05_advanced_systems_diagnostic.md)** before attempting this exam. This tests the **hardest concepts** in Rust - manual memory management while maintaining safety guarantees.
 
 **Core Understanding Required:**
 - **Unsafe Rust**: Manual memory safety, raw pointers, transmute
@@ -1286,8 +1286,8 @@ mod tests {
 
 ### **If You Pass This Exam:**
 You have mastered the **hardest concepts in Rust** and are ready for:
-- **05_systems_specialization_exam.md** - Advanced kernel/OS interaction
-- **06_concurrency_specialization_exam.md** - Expert lock-free programming
+- **07_low_level_systems_mastery.md** - Advanced kernel/OS interaction
+- **08_lock_free_concurrency_mastery.md** - Expert lock-free programming
 - **Real-world systems programming** - Database engines, operating systems, embedded systems
 
 ### **If You Don't Pass:**

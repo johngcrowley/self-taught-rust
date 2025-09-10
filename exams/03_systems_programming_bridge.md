@@ -1,16 +1,39 @@
-# 05. Systems Specialization: Advanced Programming
-**Advanced Systems Patterns & Distributed Systems**
-*Time Limit: 4 hours | Points: 200 | Difficulty: Expert*
+# Systems Programming Bridge Course
+**Active Recall Problems for Production Systems Engineering**
+
+*Time Limit: 4 hours | Total Points: 160 | Bridge to: Advanced Low-Level Systems Programming*
 
 ---
 
-## Instructions
+## Mission: Build Observable, Reliable Systems
 
-This exam tests your ability to design, debug, and optimize production-ready Rust systems. You'll encounter real-world scenarios that require deep understanding of systems programming concepts, not just language features.
+**Critical Gap Addressed**: You can write Rust applications, but can you build production-ready systems? This bridge course teaches you to create observable, reliable systems that work in the real world through hands-on problems.
 
-**Prerequisites**: Master the concepts in the homework assignments and school courses.
+**You Will Master:**
+- Building observable systems with metrics, logging, and distributed tracing
+- Network programming and protocol implementation with proper error handling
+- File system and storage programming with reliability patterns  
+- Process management and resource optimization
+- System call usage and performance optimization
+- Production deployment patterns and system reliability
 
-**Format**: Written analysis with code implementations. Focus on correctness, performance, and production readiness.
+**Next Level**: After this, you'll be ready for `07_low_level_systems_mastery.md` - Advanced Low-Level Systems Programming
+
+---
+
+## The Systems Engineering Philosophy
+
+**Rule 1**: Systems must be observable - you can't debug what you can't see  
+**Rule 2**: Every system will fail - design for graceful degradation  
+**Rule 3**: Performance matters, but reliability matters more  
+**Rule 4**: Measure everything that matters, alert on what's broken
+
+**Production Readiness Checklist**: For every system component, you must demonstrate:
+1. **Observability**: Metrics, logs, and traces for debugging
+2. **Error Handling**: Graceful handling of all failure modes  
+3. **Resource Management**: Bounded memory, CPU, and file descriptor usage
+4. **Performance**: Meets latency and throughput requirements under load
+5. **Reliability**: Continues operating during partial failures
 
 ---
 

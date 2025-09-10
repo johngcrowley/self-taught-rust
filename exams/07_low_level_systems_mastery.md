@@ -1,4 +1,4 @@
-# 05. Systems Specialization: Low-Level Systems Programming
+# Low-Level Systems Programming Mastery
 
 **Expert-Level Operating Systems & Hardware Interface Programming**
 
@@ -8,7 +8,7 @@
 
 ## Prerequisites
 
-You must pass **03_mastery_exam_v2.md** (Advanced Unsafe Rust) before attempting this exam. This focuses on the **lowest-level systems programming** concepts in Rust.
+You must pass **06_unsafe_rust_mastery.md** (Advanced Unsafe Rust) before attempting this exam. This focuses on the **lowest-level systems programming** concepts in Rust.
 
 **Core Requirements:**
 - **Kernel Interface Mastery**: System calls, memory mapping, signal handling
@@ -2227,7 +2227,7 @@ mod tests {
 
 ### **If You Pass This Exam:**
 You are now an **expert systems programmer** ready for:
-- **06_concurrency_specialization_exam_v2.md** - Lock-free programming mastery
+- **08_lock_free_concurrency_mastery.md** - Lock-free programming mastery
 - **Operating system development** - Kernels, device drivers, embedded systems
 - **High-frequency trading systems** - Ultra-low latency networking
 - **Database engine development** - Storage systems, memory management

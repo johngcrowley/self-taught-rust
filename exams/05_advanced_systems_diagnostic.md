@@ -1,4 +1,4 @@
-# 01. Advanced Systems Diagnostic: Prerequisites for Expert Rust
+# Advanced Systems Diagnostic: Prerequisites for Expert Rust
 
 **Time Limit: 3 hours | Pass Threshold: 85%**
 
@@ -432,9 +432,9 @@ where
 - **Type System**: Must correctly use GATs and complex trait bounds
 
 ### **If You Pass This Diagnostic:**
-- **03_mastery_exam.md** - Advanced unsafe Rust and memory mastery
-- **05_systems_specialization_exam.md** - Low-level systems programming
-- **06_concurrency_specialization_exam.md** - Expert lock-free programming
+- **06_unsafe_rust_mastery.md** - Advanced unsafe Rust and memory mastery
+- **07_low_level_systems_mastery.md** - Low-level systems programming
+- **08_lock_free_concurrency_mastery.md** - Expert lock-free programming
 
 ### **If You Don't Pass:**
 Focus on these prerequisites before attempting advanced exams:
