@@ -9,6 +9,8 @@
 
 **Critical Gap Addressed**: You can write Rust applications, but can you build production-ready systems? This bridge course teaches you to create observable, reliable systems that work in the real world through hands-on problems.
 
+**Prerequisites**: Pass `00_intermediate_rust_readiness.md` to prove intermediate Rust skills
+
 **You Will Master:**
 - Building observable systems with metrics, logging, and distributed tracing
 - Network programming and protocol implementation with proper error handling

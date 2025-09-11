@@ -9,6 +9,8 @@
 
 **Critical Gap Addressed**: You understand safe Rust, but can you write unsafe code safely? This bridge course teaches you to use unsafe superpowers responsibly through systematic verification and measurement.
 
+**Prerequisites**: Pass `00_intermediate_rust_readiness.md` to prove intermediate Rust skills
+
 **You Will Master:**
 - Writing unsafe code with proper safety invariants and documentation
 - Memory layout analysis and optimization techniques  

@@ -9,6 +9,8 @@
 
 **Critical Gap Addressed**: You can write Rust code, but can you measure its performance? This bridge course teaches you to benchmark, profile, and optimize using active recall problems.
 
+**Prerequisites**: Pass `00_intermediate_rust_readiness.md` to prove intermediate Rust skills
+
 **You Will Master:**
 - Benchmarking with criterion and measuring latency/throughput
 - Memory profiling and allocation analysis  

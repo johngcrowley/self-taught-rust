@@ -1,14 +1,24 @@
-# 06. Concurrency Specialization: Async & Runtime Internals  
-**Deep Async Runtime & Advanced Synchronization**
-*Time Limit: 3 hours | Points: 150 | Difficulty: Advanced*
+# Concurrency Bridge Course
+**Active Recall Problems for Concurrent Programming Mastery**
+
+*Time Limit: 3 hours | Total Points: 120 | Bridge to: Advanced Concurrent Systems*
 
 ---
 
-## Instructions
+## Mission: Master Concurrent Rust Programming
 
-This exam focuses exclusively on advanced async programming and concurrency patterns in Rust. You'll solve complex synchronization problems, debug race conditions, and design high-performance concurrent systems.
+**Critical Gap Addressed**: You can write basic async code, but can you design robust concurrent systems? This bridge course teaches you to build reliable, high-performance concurrent applications through practical problems.
 
-**Focus Areas**: Tokio runtime internals, advanced synchronization primitives, async lifetimes, backpressure, and lock-free programming.
+**Prerequisites**: Pass `00_intermediate_rust_readiness.md` to prove intermediate Rust skills
+
+**You Will Master:**
+- Advanced async programming patterns and coordination  
+- Thread-safe data structures and synchronization primitives
+- Backpressure handling and flow control
+- Concurrent system design and debugging
+- Performance measurement of concurrent code
+
+**Next Level**: After this, you'll be ready for `08_lock_free_concurrency_mastery.md` - Lock-Free Concurrency Mastery
 
 ---
 
