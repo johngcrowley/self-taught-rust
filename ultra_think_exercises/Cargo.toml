@@ -1,0 +1,21 @@
+[package]
+name = "ultra-think-exercises"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+tokio = { version = "1.35", features = ["full"] }
+futures = "0.3"
+
+[[bin]]
+name = "day01"
+path = "day01_ownership_basics.rs"
+
+[[bin]]
+name = "day25"
+path = "day25_async_basics.rs"
+
+# Add more binaries as you complete each day's exercise
+# [[bin]]
+# name = "day02"
+# path = "day02_borrowing_basics.rs"
