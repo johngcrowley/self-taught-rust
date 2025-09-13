@@ -1,12 +1,37 @@
 # SQLx Master Class - Active Recall Primer
 
+## What is SQLx?
+
+**SQLx** is Rust's premier async SQL toolkit that provides compile-time checked queries without requiring an ORM. Unlike traditional database libraries, SQLx verifies your SQL queries at compile time, catching errors before runtime while maintaining the flexibility of raw SQL.
+
+**Key Benefits:**
+- **Compile-time safety**: SQL queries are validated during compilation
+- **Async/await support**: Built from the ground up for async Rust
+- **No ORM overhead**: Direct SQL with zero-cost abstractions
+- **Multi-database**: Supports PostgreSQL, MySQL, SQLite, and MSSQL
+- **Connection pooling**: Production-ready connection management
+
+**When to use SQLx:**
+- Building web APIs that need database access
+- Applications requiring complex SQL queries
+- Projects where compile-time safety is crucial
+- Systems needing high-performance database operations
+
 ## Core Competency: Deep SQLx Mastery for Production Systems
 
-This exam tests your mastery of SQLx's core types, query mechanics, and production patterns. Master these concepts through active recall.
+This primer teaches SQLx from fundamentals to production patterns. Master these concepts through active recall.
 
 ## Part 1: Essential Types Mastery
 
 ### 1.1 Row Type Deep Dive
+
+**What is a Row?**: A Row represents a single row of data returned from a database query. It provides type-safe access to column values by index or name.
+
+**Core Row Methods:**
+- `try_get::<T>()` - Safe extraction with type conversion, returns Result
+- `get::<T>()` - Direct access, panics on error (use sparingly)
+- `len()` - Number of columns in the row
+- `columns()` - Get column metadata for inspection
 
 **Active Recall Challenge**: Without looking, implement these Row operations:
 
@@ -48,14 +73,22 @@ impl FromRow<'_, PgRow> for User {
 }
 ```
 
-**Key Row Methods You Must Know**:
-- `try_get::<T>()` - Safe extraction with type conversion
-- `get::<T>()` - Panics on error, use sparingly
-- `len()` - Number of columns
-- `is_empty()` - Check if row has columns
-- `columns()` - Get column metadata
-
 ### 1.2 Pool Management Mastery
+
+**What is a Connection Pool?**: A pool manages multiple database connections, reusing them across requests instead of creating new connections each time. This dramatically improves performance and resource usage.
+
+**Why Connection Pooling Matters:**
+- **Performance**: Eliminates connection establishment overhead
+- **Resource Management**: Prevents connection exhaustion
+- **Concurrency**: Handles multiple simultaneous requests
+- **Health Checking**: Validates connections before use
+
+**Essential Pool Configuration:**
+- `max_connections` - Maximum concurrent connections (typically 10-50)
+- `min_connections` - Keep connections alive (typically 5-10)
+- `acquire_timeout` - How long to wait for a connection
+- `idle_timeout` - Close unused connections after this time
+- `max_lifetime` - Force connection refresh after this duration
 
 **Active Recall Challenge**: Configure production-ready connection pools:
 
@@ -93,6 +126,19 @@ async fn use_pool_correctly(pool: &Pool<Postgres>) -> Result<Vec<User>, sqlx::Er
 ```
 
 ### 1.3 Query Builder Mastery
+
+**What is QueryBuilder?**: QueryBuilder allows you to construct SQL queries dynamically while maintaining compile-time safety. It's essential for building flexible APIs with optional filters.
+
+**When to Use QueryBuilder:**
+- Search endpoints with optional filters
+- Dynamic WHERE clauses based on user input
+- Conditional query logic
+- Building queries from configuration
+
+**Key Methods:**
+- `push()` - Add raw SQL text
+- `push_bind()` - Add parameterized value (prevents SQL injection)
+- `build_query_as::<T>()` - Create executable query
 
 **Active Recall Challenge**: Build dynamic, safe queries:
 
@@ -133,6 +179,19 @@ async fn dynamic_user_search(
 ## Part 2: Query Execution Patterns
 
 ### 2.1 Fetch Variants Mastery
+
+**Understanding Fetch Methods**: SQLx provides different fetch methods optimized for different use cases. Choose the right one to avoid memory issues and improve performance.
+
+**Fetch Method Guide:**
+- `fetch_one()` - Expects exactly one row, errors if 0 or >1 rows
+- `fetch_optional()` - Returns Option<T>, for 0 or 1 row scenarios
+- `fetch_all()` - Loads all rows into memory (use carefully with large results)
+- `fetch()` - Returns a Stream for memory-efficient processing of large datasets
+
+**Memory Considerations:**
+- `fetch_all()` loads everything into RAM - dangerous for large result sets
+- `fetch()` processes one row at a time - better for large datasets
+- Choose based on expected result size and memory constraints
 
 **Active Recall Challenge**: Know when to use each fetch method:
 

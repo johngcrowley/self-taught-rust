@@ -1,5 +1,37 @@
 # K3s + Postgres Production Primer - Active Recall Master Class
 
+## What is K3s?
+
+**K3s** is a lightweight, fully compliant Kubernetes distribution designed for production workloads in resource-constrained environments. It's perfect for edge computing, IoT, development, and small-scale production deployments.
+
+**Key Benefits:**
+- **Lightweight**: Single binary under 50MB with minimal dependencies
+- **Production Ready**: Fully compliant Kubernetes with enterprise features
+- **Simple Installation**: One-command installation and setup
+- **Resource Efficient**: Low memory footprint and CPU usage
+- **Edge Optimized**: Designed for ARM64 and edge computing scenarios
+
+**K3s vs Full Kubernetes:**
+- **Size**: K3s binary is 50MB vs 1GB+ for full Kubernetes
+- **Setup**: Single command vs complex cluster initialization
+- **Components**: Pre-configured with sensible defaults
+- **Storage**: Built-in local storage provider
+- **Networking**: Integrated CNI (Container Network Interface)
+
+**When to use K3s:**
+- Development and testing environments
+- Small to medium production workloads
+- Edge computing and IoT deployments
+- Learning Kubernetes concepts
+- Resource-constrained environments
+
+**Core Components:**
+- **Control Plane**: API server, scheduler, controller manager (single node)
+- **Worker Nodes**: Run your application pods
+- **Container Runtime**: containerd (built-in)
+- **Storage**: Local path provisioner for persistent volumes
+- **Networking**: Flannel CNI for pod-to-pod communication
+
 ## Core Competency: Production Kubernetes Deployment Pipeline
 
 Master the complete stack from k3s cluster setup to production-ready Rust web services with Postgres integration.
@@ -7,6 +39,16 @@ Master the complete stack from k3s cluster setup to production-ready Rust web se
 ## Part 1: K3s Cluster Foundation
 
 ### 1.1 K3s Installation and Configuration
+
+**Understanding K3s Architecture**: K3s can run in different modes:
+- **Single-node**: All components on one machine (development/testing)
+- **High Availability**: Multiple server nodes with embedded etcd
+- **Server + Agent**: Dedicated control plane with separate worker nodes
+
+**Installation Flags Explained:**
+- `--write-kubeconfig-mode 644` - Makes kubeconfig readable by non-root users
+- `--disable traefik` - Removes default ingress (we'll use our own)
+- `--disable servicelb` - Removes default load balancer (we'll use MetalLB)
 
 **Active Recall Challenge**: Set up production-ready k3s cluster:
 
@@ -46,6 +88,18 @@ ExecStart=/usr/local/bin/k3s server \
 
 ### 1.2 MetalLB Configuration
 
+**What is MetalLB?**: MetalLB provides network load balancer functionality for bare metal Kubernetes clusters. Since cloud providers offer load balancers automatically, bare metal clusters need MetalLB to expose services externally.
+
+**How MetalLB Works:**
+- **L2 Mode**: Announces service IPs using ARP (Address Resolution Protocol)
+- **BGP Mode**: Uses BGP routing for more advanced networking (enterprise setups)
+- **IP Address Pools**: Defines which IP addresses MetalLB can assign to services
+
+**Why We Need It:**
+- K3s doesn't include a load balancer implementation
+- Services of type `LoadBalancer` would stay in "Pending" state without it
+- Provides external access to services in your cluster
+
 **Active Recall Challenge**: Configure load balancer for bare metal:
 
 ```yaml
@@ -76,6 +130,20 @@ kubectl apply -f metallb-config.yaml
 ## Part 2: Postgres Production Deployment
 
 ### 2.1 Postgres StatefulSet with Persistence
+
+**Why StatefulSet for Databases?**: Databases require stable, persistent storage and network identities. StatefulSets provide:
+- **Stable Network Identity**: Each pod gets a consistent DNS name
+- **Ordered Deployment**: Pods are created/deleted in a specific order
+- **Persistent Storage**: Each pod gets its own persistent volume that survives restarts
+
+**StatefulSet vs Deployment:**
+- **Deployment**: For stateless applications (web servers, APIs)
+- **StatefulSet**: For stateful applications (databases, message queues)
+
+**Kubernetes Storage Concepts:**
+- **PersistentVolume (PV)**: Actual storage resource (like a disk)
+- **PersistentVolumeClaim (PVC)**: Request for storage by a pod
+- **StorageClass**: Defines how storage is dynamically provisioned
 
 **Active Recall Challenge**: Deploy production Postgres with proper persistence:
 

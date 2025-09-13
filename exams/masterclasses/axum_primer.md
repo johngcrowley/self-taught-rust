@@ -1,12 +1,51 @@
 # Axum Master Class - Active Recall Primer
 
+## What is Axum?
+
+**Axum** is a modern, ergonomic web framework for Rust built on top of Tokio and Tower. It's designed around async/await and provides a type-safe approach to building web APIs with minimal boilerplate.
+
+**Key Benefits:**
+- **Type Safety**: Request/response handling checked at compile time
+- **Performance**: Built on Tokio's async runtime for high concurrency
+- **Composability**: Modular design with reusable components
+- **Tower Ecosystem**: Leverages Tower's middleware and service abstractions
+- **Developer Experience**: Intuitive APIs with helpful compiler errors
+
+**When to use Axum:**
+- Building REST APIs and web services
+- Microservices that need high performance
+- Applications requiring type-safe request handling
+- Projects that want modern async Rust patterns
+
+**Core Concepts:**
+- **Handlers**: Functions that process requests and return responses
+- **Extractors**: Type-safe way to extract data from requests (path params, JSON body, etc.)
+- **State**: Shared application data (database pools, config, etc.)
+- **Middleware**: Cross-cutting concerns (auth, logging, CORS, etc.)
+- **Routing**: Mapping URLs to handler functions
+
 ## Core Competency: Production-Ready Web Services with Axum
 
-Master Axum's type system, routing mechanics, and middleware patterns for high-performance web services.
+Master Axum from fundamentals to production patterns for high-performance web services.
 
 ## Part 1: Essential Types and Extractors Mastery
 
 ### 1.1 Handler Function Types
+
+**What are Handlers?**: Handler functions are the core of Axum applications - they receive HTTP requests and return HTTP responses. Axum uses Rust's type system to automatically extract request data and convert response types.
+
+**Handler Signature Rules:**
+- Must be `async fn`
+- Can accept 0-16 extractors as parameters
+- Must return something that implements `IntoResponse`
+- Extractors are processed in order (order matters!)
+
+**Common Return Types:**
+- `impl IntoResponse` - Most flexible, any response type
+- `Result<impl IntoResponse, E>` - For error handling
+- `Json<T>` - JSON responses
+- `(StatusCode, Json<T>)` - Custom status with JSON
+- `String` or `&'static str` - Plain text responses
 
 **Active Recall Challenge**: Understand the handler signature patterns:
 
@@ -56,6 +95,21 @@ async fn list_users(
 ```
 
 ### 1.2 State Management Mastery
+
+**What is State?**: State in Axum is shared application data that's available to all handlers. This typically includes database connections, configuration, caches, and other resources that need to be shared across requests.
+
+**State Requirements:**
+- Must implement `Clone` (Axum clones state for each handler)
+- Usually wrapped in `Arc` for shared ownership
+- Passed to handlers via the `State` extractor
+- Set on the Router with `.with_state(state)`
+
+**Common State Patterns:**
+- Database connection pools
+- Application configuration
+- Shared caches (Redis clients)
+- Metrics collectors
+- External service clients
 
 **Active Recall Challenge**: Implement shared application state:
 
@@ -190,6 +244,20 @@ async fn export_users(
 ## Part 2: Routing Architecture
 
 ### 2.1 Router Composition Mastery
+
+**What is Router Composition?**: Large applications need organized routing. Axum allows you to compose multiple routers together, creating a modular architecture where different features can have their own routing logic.
+
+**Router Composition Benefits:**
+- **Modularity**: Separate concerns into different router modules
+- **Maintainability**: Easier to understand and modify specific features
+- **Testing**: Test individual router modules in isolation
+- **Team Development**: Different developers can work on different router modules
+
+**Key Router Methods:**
+- `.merge()` - Combine routers together
+- `.nest()` - Mount a router at a specific path prefix
+- `.layer()` - Apply middleware to all routes in the router
+- `.route_layer()` - Apply middleware to routes added after this call
 
 **Active Recall Challenge**: Build modular, scalable routing:
 
